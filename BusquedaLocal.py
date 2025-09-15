@@ -68,5 +68,5 @@ def codificar_dec_bin(n, nbits):
         binArr.append(str(bit))
         n //= 2
 
-    return 0
-
+    binArr.reverse()
+    return binArr
