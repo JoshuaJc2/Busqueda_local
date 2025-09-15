@@ -1,3 +1,13 @@
+def codifica_dec(n, nBits):
+    binArr = []
+    while n > 0 and len(binArr) < nBits:
+        bit = n%2 
+        binArr.append(bit)
+        n //= 2
+
+    binArr.reverse()
+    return binArr
+
 def codifica(x, n_bits, a, b):
     """
     Codifica un valor real x en una representación binaria de n_bits bits.
