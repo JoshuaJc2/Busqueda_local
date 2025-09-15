@@ -56,17 +56,3 @@ def rosenbrock(X : np.array):
         raise ValueError("Advertencia: algunos valores están fuera del rango [-2.048, 2.048]")
     sum_term = np.sum(100.0 * (X[1:] - X[:-1]**2.0)**2.0 + (1 - X[:-1])**2.0)
     return sum_term
-
-# Ejercicio 2.
-# Algoritmo de representación binaria para mapear 
-# (codificar y decodificar) números naturales.
-
-def codificar_dec_bin(n, nbits):
-    binArr = []
-    while n > 0:
-        bit = n %2
-        binArr.append(str(bit))
-        n //= 2
-
-    binArr.reverse()
-    return binArr
