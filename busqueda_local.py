@@ -24,12 +24,12 @@ class BusquedaLocal:
     
     def generar_solucion_aleatoria(self):
         """
-        Genera una solución aleatoria como vector de bits.
+        Genera una solución aleatoria como matriz de bits.
         
         Returns:
-            Lista de bits (0s y 1s) de tamaño dimension * bits_por_var
+            Matriz numpy de forma (dimension, bits_por_var) con 0s y 1s
         """
-        return [random.randint(0, 1) for _ in range(self.total_bits)]
+        return np.random.randint(0, 2, size=(self.dimension, self.bits_por_var))
     
     def generar_vecindad(self, solucion):
         """
@@ -37,36 +37,65 @@ class BusquedaLocal:
         Vecindad de Hamming distance = 1.
         
         Args:
-            solucion: Vector de bits actual
+            solucion: Matriz de bits de forma (dimension, bits_por_var)
             
         Returns:
-            Lista de vectores vecinos (cada uno con 1 bit diferente)
+            Lista de matrices vecinas (cada una con 1 bit diferente)
         """
         vecinos = []
-        for i in range(len(solucion)):
-            # Crear vecino flippeando el bit i
-            vecino = solucion.copy()
-            vecino[i] = 1 - vecino[i]  # Flip: 0->1, 1->0
-            vecinos.append(vecino)
+        filas, cols = solucion.shape
+        
+        for i in range(filas):
+            for j in range(cols):
+                # Crear vecino flippeando el bit (i,j)
+                vecino = solucion.copy()
+                vecino[i, j] = 1 - vecino[i, j]  # Flip: 0->1, 1->0
+                vecinos.append(vecino)
         return vecinos
     
-    def evaluar_solucion(self, bits):
+    def evaluar_solucion(self, matriz_bits):
         """
-        Evalúa una solución (vector de bits) decodificándola y aplicando la función objetivo.
+        Evalúa una solución (matriz de bits) decodificándola y aplicando la función objetivo.
         
         Args:
-            bits: Vector de bits
+            matriz_bits: Matriz de bits de forma (dimension, bits_por_var)
             
         Returns:
             Valor de la función objetivo
         """
-        # Decodificar bits a valores reales
-        valores_reales = decodifica_array(bits, self.dimension, self.bits_por_var, 
-                                        self.rango_min, self.rango_max)
+        valores_reales = []
+        
+        # Decodificar cada fila (variable) de la matriz
+        for i in range(self.dimension):
+            bits_variable = matriz_bits[i, :].tolist()  # Convertir fila a lista
+            # Usar la función de decodificación existente
+            from codificacion import decodifica
+            valor_real = decodifica(bits_variable, self.bits_por_var, 
+                                  self.rango_min, self.rango_max)
+            valores_reales.append(valor_real)
         
         # Convertir a numpy array y evaluar
         x = np.array(valores_reales)
         return self.funcion_objetivo(x)
+    
+    def matriz_a_vector(self, matriz_bits):
+        """Convierte matriz de bits a vector lineal para compatibilidad."""
+        return matriz_bits.flatten()
+    
+    def vector_a_matriz(self, vector_bits):
+        """Convierte vector lineal a matriz de bits."""
+        return np.array(vector_bits).reshape(self.dimension, self.bits_por_var)
+    
+    def mostrar_solucion(self, matriz_bits):
+        """Muestra la solución de forma legible."""
+        valores_reales = []
+        for i in range(self.dimension):
+            bits_variable = matriz_bits[i, :].tolist()
+            from codificacion import decodifica
+            valor_real = decodifica(bits_variable, self.bits_por_var, 
+                                  self.rango_min, self.rango_max)
+            valores_reales.append(valor_real)
+        return valores_reales
     
     def mayor_descenso(self, max_iter=1000):
         """
@@ -171,15 +200,24 @@ class BusquedaLocal:
 
 # Ejemplo de uso y pruebas
 if __name__ == "__main__":
-    print("🔍 BÚSQUEDA LOCAL")
+    print("🔍 BÚSQUEDA LOCAL (Matriz)")
     print("=" * 40)
     
     # Configuración
     dimension = 2
-    bits_por_var = 8
+    bits_por_var = 4  # Menos bits para visualizar mejor
     bl = BusquedaLocal(sphere, dimension, bits_por_var, -5.12, 5.12)
     
-    print(f"Config: dim={dimension}, bits={bits_por_var}, total_bits={bl.total_bits}")
+    print(f"Config: dim={dimension}, bits={bits_por_var}")
+    
+    # Mostrar ejemplo de solución como matriz
+    print(f"\n Ejemplo de solución aleatoria:")
+    solucion_ejemplo = bl.generar_solucion_aleatoria()
+    print(f"Matriz de bits:\n{solucion_ejemplo}")
+    valores = bl.mostrar_solucion(solucion_ejemplo)
+    print(f"Valores reales: {[round(x, 3) for x in valores]}")
+    fitness = bl.evaluar_solucion(solucion_ejemplo)
+    print(f"Fitness: {fitness:.6f}")
     
     # Probar las 3 variantes
     algoritmos = [
@@ -189,8 +227,10 @@ if __name__ == "__main__":
     ]
     
     for nombre, algoritmo in algoritmos:
-        print(f"\n🚀 {nombre}:")
-        solucion, fitness, evals = algoritmo(max_iter=100)
-        print(f"   Resultado: f(x) = {fitness:.6f}, Evaluaciones: {evals}")
-    
-    print(f"\n✅ Todos los algoritmos funcionando!")
+        print(f"\n {nombre}:")
+        solucion, fitness, evals = algoritmo(max_iter=50)
+        valores = bl.mostrar_solucion(solucion)
+        print(f"   Valores: {[round(x, 3) for x in valores]}")
+        print(f"   f(x) = {fitness:.6f}, Evaluaciones: {evals}")
+
+    print(f"\n Todos los ejemplos han funcionado!")
