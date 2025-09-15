@@ -5,8 +5,25 @@ def codifica_dec(n, nBits):
         binArr.append(bit)
         n //= 2
 
-    binArr.reverse()
+
+    while len(binArr) < nBits:
+        binArr.append(0)
+
+    #binArr.reverse()
     return binArr
+
+def decodifica_dec(bits, nBits):
+    if len(bits) > nBits:
+        raise ValueError(f"Imposible convertir {bits} con {nBits}")
+    n = 0
+    base = 1
+    for i in range(0, nBits-1):
+        if i >= len(bits):
+            break
+        n += base * bits[i]
+        base = base * 2
+
+    return n
 
 def codifica(x, n_bits, a, b):
     """
@@ -107,9 +124,15 @@ if __name__ == "__main__":
     n_bits = 8
     a = 0.0
     b = 10.0
+    i = 135
     
     print(f"Valor original: {valor}")
-    
+    print(f"Valor original decimal: {i}")
+
+    binario = codifica_dec(i, 12)
+    print(f"Valor binario: {binario}" )
+    print(f"Volver: {decodifica_dec(binario, 12)}")
+
     # Codificar
     bits_codificados = codifica(valor, n_bits, a, b)
     print(f"Bits codificados: {bits_codificados}")
