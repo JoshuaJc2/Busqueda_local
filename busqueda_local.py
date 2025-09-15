@@ -67,45 +67,130 @@ class BusquedaLocal:
         # Convertir a numpy array y evaluar
         x = np.array(valores_reales)
         return self.funcion_objetivo(x)
+    
+    def mayor_descenso(self, max_iter=1000):
+        """
+        Búsqueda por descenso - Mayor descenso.
+        Explora TODOS los vecinos y elige el mejor.
+        """
+        solucion_actual = self.generar_solucion_aleatoria()
+        fitness_actual = self.evaluar_solucion(solucion_actual)
+        evaluaciones = 1
+        
+        for iteracion in range(max_iter):
+            vecinos = self.generar_vecindad(solucion_actual)
+            mejor_vecino = None
+            mejor_fitness = fitness_actual
+            
+            # Evaluar todos los vecinos
+            for vecino in vecinos:
+                fitness_vecino = self.evaluar_solucion(vecino)
+                evaluaciones += 1
+                
+                if fitness_vecino < mejor_fitness:  # Minimización
+                    mejor_vecino = vecino
+                    mejor_fitness = fitness_vecino
+            
+            # Si no hay mejora, terminar
+            if mejor_vecino is None:
+                break
+                
+            solucion_actual = mejor_vecino
+            fitness_actual = mejor_fitness
+        
+        return solucion_actual, fitness_actual, evaluaciones
+    
+    def descenso_aleatorio(self, max_iter=1000):
+        """
+        Búsqueda por descenso - Descenso aleatorio.
+        Explora vecinos aleatoriamente hasta encontrar mejora.
+        """
+        solucion_actual = self.generar_solucion_aleatoria()
+        fitness_actual = self.evaluar_solucion(solucion_actual)
+        evaluaciones = 1
+        
+        for iteracion in range(max_iter):
+            vecinos = self.generar_vecindad(solucion_actual)
+            random.shuffle(vecinos)  # Orden aleatorio
+            
+            mejor_vecino = None
+            mejor_fitness = fitness_actual
+            
+            # Evaluar vecinos hasta encontrar mejora
+            for vecino in vecinos:
+                fitness_vecino = self.evaluar_solucion(vecino)
+                evaluaciones += 1
+                
+                if fitness_vecino < fitness_actual:  # Minimización
+                    mejor_vecino = vecino
+                    mejor_fitness = fitness_vecino
+                    break  # Tomar el primer mejor
+            
+            # Si no hay mejora, terminar
+            if mejor_vecino is None:
+                break
+                
+            solucion_actual = mejor_vecino
+            fitness_actual = mejor_fitness
+        
+        return solucion_actual, fitness_actual, evaluaciones
+    
+    def primer_descenso(self, max_iter=1000):
+        """
+        Búsqueda por descenso - Primer descenso.
+        Toma el PRIMER vecino que sea mejor.
+        """
+        solucion_actual = self.generar_solucion_aleatoria()
+        fitness_actual = self.evaluar_solucion(solucion_actual)
+        evaluaciones = 1
+        
+        for iteracion in range(max_iter):
+            vecinos = self.generar_vecindad(solucion_actual)
+            
+            mejor_vecino = None
+            mejor_fitness = fitness_actual
+            
+            # Tomar el primer vecino mejor
+            for vecino in vecinos:
+                fitness_vecino = self.evaluar_solucion(vecino)
+                evaluaciones += 1
+                
+                if fitness_vecino < fitness_actual:  # Minimización
+                    mejor_vecino = vecino
+                    mejor_fitness = fitness_vecino
+                    break  # Primer mejor encontrado
+            
+            # Si no hay mejora, terminar
+            if mejor_vecino is None:
+                break
+                
+            solucion_actual = mejor_vecino
+            fitness_actual = mejor_fitness
+        
+        return solucion_actual, fitness_actual, evaluaciones
 
 # Ejemplo de uso y pruebas
 if __name__ == "__main__":
-    print("🔍 BÚSQUEDA LOCAL - Generador y Vecindad")
-    print("=" * 50)
+    print("🔍 BÚSQUEDA LOCAL")
+    print("=" * 40)
     
     # Configuración
     dimension = 2
     bits_por_var = 8
-    rango_min = -5.12
-    rango_max = 5.12
+    bl = BusquedaLocal(sphere, dimension, bits_por_var, -5.12, 5.12)
     
-    # Crear instancia para función Sphere
-    bl = BusquedaLocal(sphere, dimension, bits_por_var, rango_min, rango_max)
+    print(f"Config: dim={dimension}, bits={bits_por_var}, total_bits={bl.total_bits}")
     
-    print(f"Dimensión: {dimension}")
-    print(f"Bits por variable: {bits_por_var}")
-    print(f"Total de bits: {bl.total_bits}")
-    print(f"Rango: [{rango_min}, {rango_max}]")
+    # Probar las 3 variantes
+    algoritmos = [
+        ("Mayor Descenso", bl.mayor_descenso),
+        ("Descenso Aleatorio", bl.descenso_aleatorio), 
+        ("Primer Descenso", bl.primer_descenso)
+    ]
     
-    # Generar solución aleatoria
-    print("\n📍 Generando solución aleatoria:")
-    solucion = bl.generar_solucion_aleatoria()
-    print(f"Bits: {solucion}")
+    for nombre, algoritmo in algoritmos:
+        print(f"\n🚀 {nombre}:")
+        solucion, fitness, evals = algoritmo(max_iter=100)
+        print(f"   Resultado: f(x) = {fitness:.6f}, Evaluaciones: {evals}")
     
-    # Evaluar solución
-    fitness = bl.evaluar_solucion(solucion)
-    print(f"Fitness: {fitness:.6f}")
-    
-    # Generar vecindad
-    print(f"\n🏘️  Generando vecindad (primeros 5 vecinos):")
-    vecinos = bl.generar_vecindad(solucion)
-    print(f"Total de vecinos: {len(vecinos)}")
-    
-    for i in range(min(5, len(vecinos))):
-        vecino = vecinos[i]
-        fitness_vecino = bl.evaluar_solucion(vecino)
-        # Mostrar qué bit cambió
-        diff_pos = [j for j in range(len(solucion)) if solucion[j] != vecino[j]][0]
-        print(f"Vecino {i+1} (bit {diff_pos}): fitness = {fitness_vecino:.6f}")
-    
-    print(f"\n✅ Generador y operador de vecindad funcionando correctamente!")
+    print(f"\n✅ Todos los algoritmos funcionando!")
