@@ -1,7 +1,7 @@
 import numpy as np
 # Ejercicio 1
 ## Funciones
-def sphere(x : np.aarray):
+def sphere(x : np.array):
     '''
     Funcion Sphere
     '''
@@ -29,7 +29,7 @@ def ackley(X : np.array, a=20, b=0.2, c=2*np.pi):
     return a + np.e + term_1 + term_2
 
 def griewank(X : np.array):
-    if np.any(X < -600) or np.any(x > 600):
+    if np.any(X < -600) or np.any(X > 600):
         raise ValueError("Advertencia: algunos valores están fuera del rango [-600, 600]")
 
     n = len(X)
@@ -43,7 +43,7 @@ def griewank(X : np.array):
     return 1 + sum_term + prod_term
 
 def rastrigin(X : np.array):
-    if np.any(X < 5.12) or np.any(X > 5.12):
+    if np.any(X < -5.12) or np.any(X > 5.12):
         raise ValueError("Advertencia: algunos valores están fuera del rango [-5.12, 5.12]")
 
     n = len(X)
@@ -52,7 +52,7 @@ def rastrigin(X : np.array):
     return 10*n + sum_term
 
 def rosenbrock(X : np.array):
-    if np.any(X < 2.048) or np.any(X > 2.048):
+    if np.any(X < -2.048) or np.any(X > 2.048):
         raise ValueError("Advertencia: algunos valores están fuera del rango [-2.048, 2.048]")
     sum_term = np.sum(100.0 * (X[1:] - X[:-1]**2.0)**2.0 + (1 - X[:-1])**2.0)
     return sum_term

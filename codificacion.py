@@ -8,6 +8,21 @@ def codifica_dec(n, nBits):
     binArr.reverse()
     return binArr
 
+def decodifica_dec(binArr):
+    """
+    Decodifica un array binario a su valor decimal equivalente.
+    
+    Args:
+        binArr: Lista de bits (0s y 1s) representando el número binario
+        
+    Returns:
+        Valor decimal equivalente
+    """
+    decimal = 0
+    for i in range(len(binArr)):
+        decimal = (decimal << 1) | binArr[i]
+    return decimal
+
 def codifica(x, n_bits, a, b):
     """
     Codifica un valor real x en una representación binaria de n_bits bits.
