@@ -41,14 +41,6 @@ class BusquedaLocal:
         x = np.array(valores_reales)
         return self.funcion_objetivo(x)
     
-    def matriz_a_vector(self, matriz_bits):
-        """Convierte matriz de bits a vector lineal para compatibilidad."""
-        return matriz_bits.flatten()
-    
-    def vector_a_matriz(self, vector_bits):
-        """Convierte vector lineal a matriz de bits."""
-        return np.array(vector_bits).reshape(self.dimension, self.bits_por_var)
-    
     def mostrar_solucion(self, matriz_bits):
         """Muestra la solución de forma legible."""
         valores_reales = []
@@ -158,7 +150,7 @@ class BusquedaLocal:
 if __name__ == "__main__":
     
     dimension = 10
-    bits_por_var = 5  
+    bits_por_var = 10  
     bl = BusquedaLocal(sphere, dimension, bits_por_var, -5.12, 5.12)
     b2 = BusquedaLocal(ackley, dimension, bits_por_var, -30, 30)
     b3 = BusquedaLocal(griewank, dimension, bits_por_var, -600, 600)
