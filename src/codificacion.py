@@ -1,20 +1,16 @@
 def codifica_dec(n, nBits):
-    binArr = []
-    while n > 0 and len(binArr) < nBits:
-        bit = n%2 
-        binArr.append(bit)
+    binArr = [0] * nBits
+
+    for i in range(nbits-1, -1, -1):
+        binArr[i] = n%2
         n //= 2
 
-
-    while len(binArr) < nBits:
-        binArr.append(0)
-
-    #binArr.reverse()
     return binArr
 
 def decodifica_dec(bits, nBits):
     if len(bits) > nBits:
         raise ValueError(f"Imposible convertir {bits} con {nBits}")
+    bits.reverse()              # Se asume orden correcto de los bits
     n = 0
     base = 1
     for i in range(0, nBits-1):
@@ -26,24 +22,16 @@ def decodifica_dec(bits, nBits):
     return n
 
 def codifica(x, n_bits, a, b):
-
     max_val = (1 << n_bits) - 1  # 2^n_bits - 1
     k = round((x - a) * max_val / (b - a))
-    bits = [0] * n_bits
-    
-    for i in range(n_bits - 1, -1, -1):
-        bits[i] = k % 2
-        k //= 2
-    
-    return bits
+    return codifica_dec(k)
 
 
 def decodifica(x_cod, n_bits, a, b):
-
     k = 0
     for i in range(n_bits):
         k = (k << 1) | x_cod[i]
-    
+
     max_val = (1 << n_bits) - 1
     return a + k * (b - a) / max_val
 

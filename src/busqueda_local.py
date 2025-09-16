@@ -231,7 +231,8 @@ def validar_parametros(n, d, b, i):
     return {'n': n, 'd': d, 'b': b, 'i': i}
 
 def imprimir_parametros(params):
-    print(f"  Función (n): {params['n']}")
+    func_info = FuncionesPrueba().get_function(params['n'])
+    print(f"  Función (n): {params['n']} - {func_info['name']}")
     print(f"  Dimensión (d): {params['d']}")
     print(f"  Bits (b): {params['b']}")
     print(f"  Iteraciones (i): {params['i']}")
@@ -267,9 +268,9 @@ def ejecutar(params):
     print(f"Fitness: {fitness:.6f}")
 
     algoritmos = [
-        ("Mayor Descenso Esfera", bl.mayor_descenso),
-        ("Descenso Aleatorio Esfera", bl.descenso_aleatorio),
-        ("Primer Descenso Esfera", bl.primer_descenso)
+        ("Mayor Descenso", bl.mayor_descenso),
+        ("Descenso Aleatorio", bl.descenso_aleatorio),
+        ("Primer Descenso", bl.primer_descenso)
     ]
 
 
