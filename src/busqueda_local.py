@@ -270,5 +270,3 @@ if __name__ == "__main__":
         r5 = b5.mostrar_solucion(solucion)
         print(f"   Valores: {[round(x, 3) for x in r5]}")
         print(f"   f(x) = {f4:.6f}, Evaluaciones: {evals}")
-
-    print(f"\n Todos los ejemplos han funcionado!")
