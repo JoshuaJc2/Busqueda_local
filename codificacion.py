@@ -26,18 +26,7 @@ def decodifica_dec(bits, nBits):
     return n
 
 def codifica(x, n_bits, a, b):
-    """
-    Codifica un valor real x en una representación binaria de n_bits bits.
-    
-    Args:
-        x: Valor real a codificar
-        n_bits: Número de bits para la representación
-        a: Límite inferior del rango
-        b: Límite superior del rango
-    
-    Returns:
-        Lista de enteros (0 o 1) representando la codificación binaria
-    """
+
     max_val = (1 << n_bits) - 1  # 2^n_bits - 1
     k = round((x - a) * max_val / (b - a))
     bits = [0] * n_bits
@@ -50,18 +39,7 @@ def codifica(x, n_bits, a, b):
 
 
 def decodifica(x_cod, n_bits, a, b):
-    """
-    Decodifica una representación binaria a un valor real.
-    
-    Args:
-        x_cod: Lista de bits (0s y 1s)
-        n_bits: Número de bits
-        a: Límite inferior del rango
-        b: Límite superior del rango
-    
-    Returns:
-        Valor real decodificado
-    """
+
     k = 0
     for i in range(n_bits):
         k = (k << 1) | x_cod[i]
@@ -71,19 +49,7 @@ def decodifica(x_cod, n_bits, a, b):
 
 
 def codifica_array(x, dim_x, n_bits, a, b):
-    """
-    Codifica un array de valores reales.
-    
-    Args:
-        x: Array de valores reales a codificar
-        dim_x: Dimensión del array (número de elementos)
-        n_bits: Número de bits por elemento
-        a: Límite inferior del rango
-        b: Límite superior del rango
-    
-    Returns:
-        Lista de bits concatenados de todas las codificaciones
-    """
+
     res = [0] * (dim_x * n_bits)
     for i in range(dim_x):
         bits = codifica(x[i], n_bits, a, b)
@@ -94,19 +60,7 @@ def codifica_array(x, dim_x, n_bits, a, b):
 
 
 def decodifica_array(x_cod, dim_x, n_bits, a, b):
-    """
-    Decodifica un array de bits a valores reales.
-    
-    Args:
-        x_cod: Array de bits codificados
-        dim_x: Número de elementos a decodificar
-        n_bits: Número de bits por elemento
-        a: Límite inferior del rango
-        b: Límite superior del rango
-    
-    Returns:
-        Lista de valores reales decodificados
-    """
+
     res = [0.0] * dim_x
     for i in range(dim_x):
         bits = [0] * n_bits
