@@ -20,7 +20,7 @@ def ackley(X : np.array, a=20, b=0.2, c=2*np.pi):
     n = len(X)
 
     #Suma de cuadrados
-    sum_squares = sphere(X)
+    sum_squares = np.sum(X**2.0)
 
     # Suma de cosenos
     sum_cos = np.sum(np.cos(c * X))

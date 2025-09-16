@@ -5,16 +5,7 @@ from EvaluacionFunciones import sphere, ackley, griewank, rastrigin, rosenbrock
 
 class BusquedaLocal:
     def __init__(self, funcion_objetivo, dimension, bits_por_var, rango_min, rango_max):
-        """
-        Inicializa la búsqueda local.
-        
-        Args:
-            funcion_objetivo: Función a optimizar (sphere, ackley, etc.)
-            dimension: Número de variables
-            bits_por_var: Bits por variable
-            rango_min: Límite inferior del rango
-            rango_max: Límite superior del rango
-        """
+
         self.funcion_objetivo = funcion_objetivo
         self.dimension = dimension
         self.bits_por_var = bits_por_var
@@ -23,25 +14,9 @@ class BusquedaLocal:
         self.total_bits = dimension * bits_por_var
     
     def generar_solucion_aleatoria(self):
-        """
-        Genera una solución aleatoria como matriz de bits.
-        
-        Returns:
-            Matriz numpy de forma (dimension, bits_por_var) con 0s y 1s
-        """
         return np.random.randint(0, 2, size=(self.dimension, self.bits_por_var))
     
     def generar_vecindad(self, solucion):
-        """
-        Genera todos los vecinos de una solución mediante flip de 1 bit.
-        Vecindad de Hamming distance = 1.
-        
-        Args:
-            solucion: Matriz de bits de forma (dimension, bits_por_var)
-            
-        Returns:
-            Lista de matrices vecinas (cada una con 1 bit diferente)
-        """
         vecinos = []
         filas, cols = solucion.shape
         
@@ -54,27 +29,15 @@ class BusquedaLocal:
         return vecinos
     
     def evaluar_solucion(self, matriz_bits):
-        """
-        Evalúa una solución (matriz de bits) decodificándola y aplicando la función objetivo.
-        
-        Args:
-            matriz_bits: Matriz de bits de forma (dimension, bits_por_var)
-            
-        Returns:
-            Valor de la función objetivo
-        """
         valores_reales = []
         
-        # Decodificar cada fila (variable) de la matriz
         for i in range(self.dimension):
-            bits_variable = matriz_bits[i, :].tolist()  # Convertir fila a lista
-            # Usar la función de decodificación existente
+            bits_variable = matriz_bits[i, :].tolist() 
             from codificacion import decodifica
             valor_real = decodifica(bits_variable, self.bits_por_var, 
                                   self.rango_min, self.rango_max)
             valores_reales.append(valor_real)
         
-        # Convertir a numpy array y evaluar
         x = np.array(valores_reales)
         return self.funcion_objetivo(x)
     
@@ -111,16 +74,14 @@ class BusquedaLocal:
             mejor_vecino = None
             mejor_fitness = fitness_actual
             
-            # Evaluar todos los vecinos
             for vecino in vecinos:
                 fitness_vecino = self.evaluar_solucion(vecino)
                 evaluaciones += 1
                 
-                if fitness_vecino < mejor_fitness:  # Minimización
+                if fitness_vecino < mejor_fitness:  
                     mejor_vecino = vecino
                     mejor_fitness = fitness_vecino
             
-            # Si no hay mejora, terminar
             if mejor_vecino is None:
                 break
                 
@@ -140,22 +101,20 @@ class BusquedaLocal:
         
         for iteracion in range(max_iter):
             vecinos = self.generar_vecindad(solucion_actual)
-            random.shuffle(vecinos)  # Orden aleatorio
+            random.shuffle(vecinos) 
             
             mejor_vecino = None
             mejor_fitness = fitness_actual
             
-            # Evaluar vecinos hasta encontrar mejora
             for vecino in vecinos:
                 fitness_vecino = self.evaluar_solucion(vecino)
                 evaluaciones += 1
                 
-                if fitness_vecino < fitness_actual:  # Minimización
+                if fitness_vecino < fitness_actual: 
                     mejor_vecino = vecino
                     mejor_fitness = fitness_vecino
-                    break  # Tomar el primer mejor
+                    break  
             
-            # Si no hay mejora, terminar
             if mejor_vecino is None:
                 break
                 
@@ -179,17 +138,15 @@ class BusquedaLocal:
             mejor_vecino = None
             mejor_fitness = fitness_actual
             
-            # Tomar el primer vecino mejor
             for vecino in vecinos:
                 fitness_vecino = self.evaluar_solucion(vecino)
                 evaluaciones += 1
                 
-                if fitness_vecino < fitness_actual:  # Minimización
+                if fitness_vecino < fitness_actual: 
                     mejor_vecino = vecino
                     mejor_fitness = fitness_vecino
-                    break  # Primer mejor encontrado
+                    break  
             
-            # Si no hay mejora, terminar
             if mejor_vecino is None:
                 break
                 
@@ -198,39 +155,128 @@ class BusquedaLocal:
         
         return solucion_actual, fitness_actual, evaluaciones
 
-# Ejemplo de uso y pruebas
 if __name__ == "__main__":
-    print("🔍 BÚSQUEDA LOCAL (Matriz)")
-    print("=" * 40)
     
-    # Configuración
-    dimension = 2
-    bits_por_var = 4  # Menos bits para visualizar mejor
+    dimension = 10
+    bits_por_var = 5  
     bl = BusquedaLocal(sphere, dimension, bits_por_var, -5.12, 5.12)
-    
+    b2 = BusquedaLocal(ackley, dimension, bits_por_var, -30, 30)
+    b3 = BusquedaLocal(griewank, dimension, bits_por_var, -600, 600)
+    b4 = BusquedaLocal(rastrigin, dimension, bits_por_var, -5.12, 5.12)
+    b5 = BusquedaLocal(rosenbrock, dimension, bits_por_var, -2.048, 2.048)
+
+
+
     print(f"Config: dim={dimension}, bits={bits_por_var}")
     
-    # Mostrar ejemplo de solución como matriz
-    print(f"\n Ejemplo de solución aleatoria:")
-    solucion_ejemplo = bl.generar_solucion_aleatoria()
-    print(f"Matriz de bits:\n{solucion_ejemplo}")
-    valores = bl.mostrar_solucion(solucion_ejemplo)
-    print(f"Valores reales: {[round(x, 3) for x in valores]}")
-    fitness = bl.evaluar_solucion(solucion_ejemplo)
+  
+    esfera = bl.generar_solucion_aleatoria()
+    akli = b2.generar_solucion_aleatoria()
+    grigan = b3.generar_solucion_aleatoria()
+    rastrin = b4.generar_solucion_aleatoria()
+    rosenbok = b5.generar_solucion_aleatoria()
+    ##########################################################################
+    
+    print(f"Matriz de bits Sphere:\n{esfera}")
+    v1 = bl.mostrar_solucion(esfera)
+    print(f"Matriz de bits ackley :\n{akli}")
+    v2 = b2.mostrar_solucion(akli)
+    print(f"Matriz de bits griewank :\n{grigan}")
+    v3 = b3.mostrar_solucion(grigan)
+    print(f"Matriz de bits rastrigin :\n{rastrin}")
+    v4 = b4.mostrar_solucion(rastrin)
+    print(f"Matriz de bits rosenbrock :\n{rosenbok}")
+    v5 = b5.mostrar_solucion(rosenbok)
+
+
+
+    print(f"Valores reales Sphere : {[round(x, 3) for x in v1]}")
+    fitness = bl.evaluar_solucion(esfera)
     print(f"Fitness: {fitness:.6f}")
+
+
+    print(f"Valores reales ackley: {[round(x, 3) for x in v2]}")
+    f1 = b2.evaluar_solucion(akli)
+    print(f"Fitness: {f1:.6f}")
+
+
+    print(f"Valores reales griewank: {[round(x, 3) for x in v3]}")
+    f2 = b3.evaluar_solucion(grigan)
+    print(f"Fitness: {f2:.6f}")
+
+
+    print(f"Valores reales rastrigin: {[round(x, 3) for x in v4]}")
+    f3 = b4.evaluar_solucion(rastrin)
+    print(f"Fitness: {f3:.6f}")
+
+    print(f"Valores reales rosenbrock: {[round(x, 3) for x in v5]}")
+    f4 = b5.evaluar_solucion(rosenbok)
+    print(f"Fitness: {f4:.6f}")
     
     # Probar las 3 variantes
     algoritmos = [
-        ("Mayor Descenso", bl.mayor_descenso),
-        ("Descenso Aleatorio", bl.descenso_aleatorio), 
-        ("Primer Descenso", bl.primer_descenso)
+        ("Mayor Descenso Esfera", bl.mayor_descenso),
+        ("Descenso Aleatorio Esfera", bl.descenso_aleatorio), 
+        ("Primer Descenso Esfera", bl.primer_descenso)
     ]
     
     for nombre, algoritmo in algoritmos:
         print(f"\n {nombre}:")
         solucion, fitness, evals = algoritmo(max_iter=50)
-        valores = bl.mostrar_solucion(solucion)
-        print(f"   Valores: {[round(x, 3) for x in valores]}")
+        r1 = bl.mostrar_solucion(solucion)
+        print(f"   Valores: {[round(x, 3) for x in r1]}")
         print(f"   f(x) = {fitness:.6f}, Evaluaciones: {evals}")
+
+    algoritmos2 = [
+        ("Mayor Descenso ackley", b2.mayor_descenso),
+        ("Descenso Aleatorio ackley", b2.descenso_aleatorio), 
+        ("Primer Descenso ackley", b2.primer_descenso)
+    ]
+
+    for nombre, algoritmo in algoritmos2:
+        print(f"\n {nombre}:")
+        solucion, f1, evals = algoritmo(max_iter=50)
+        r2 = b2.mostrar_solucion(solucion)
+        print(f"   Valores: {[round(x, 3) for x in r2]}")
+        print(f"   f(x) = {f2:.6f}, Evaluaciones: {evals}")
+
+    algoritmos3 = [
+        ("Mayor Descenso griewank", b3.mayor_descenso),
+        ("Descenso Aleatorio griewank", b3.descenso_aleatorio), 
+        ("Primer Descenso griewank", b3.primer_descenso)
+    ]
+    
+    for nombre, algoritmo in algoritmos3:
+        print(f"\n {nombre}:")
+        solucion, f2, evals = algoritmo(max_iter=50) 
+        r3 = b3.mostrar_solucion(solucion)
+        print(f"   Valores: {[round(x, 3) for x in r3]}")
+        print(f"   f(x) = {f2:.6f}, Evaluaciones: {evals}")
+
+    algoritmos4 = [
+        ("Mayor Descenso rastrigin", b4.mayor_descenso),
+        ("Descenso Aleatorio rastrigin", b4.descenso_aleatorio), 
+        ("Primer Descenso rastrigin", b4.primer_descenso)
+    ]
+    
+    for nombre, algoritmo in algoritmos4:
+        print(f"\n {nombre}:")
+        solucion, f3, evals = algoritmo(max_iter=50) 
+        r4 = b4.mostrar_solucion(solucion)
+        print(f"   Valores: {[round(x, 3) for x in r4]}")
+        print(f"   f(x) = {f3:.6f}, Evaluaciones: {evals}")
+
+    algoritmos5 = [
+        ("Mayor Descenso rosenbrock", b5.mayor_descenso),
+        ("Descenso Aleatorio rosenbrock", b5.descenso_aleatorio), 
+        ("Primer Descenso rosenbrock", b5.primer_descenso)
+    ]
+    
+    for nombre, algoritmo in algoritmos5:
+        print(f"\n {nombre}:")
+        solucion, f4, evals = algoritmo(max_iter=50)
+        r5 = b5.mostrar_solucion(solucion)
+        print(f"   Valores: {[round(x, 3) for x in r5]}")
+        print(f"   f(x) = {f4:.6f}, Evaluaciones: {evals}")
 
     print(f"\n Todos los ejemplos han funcionado!")
