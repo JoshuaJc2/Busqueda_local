@@ -38,7 +38,7 @@ if __name__ == "__main__":
 2 7 0 0 0 0 8 9 0"""
 
     with open("sudoku_test.txt", "w") as f:
-        f.write(sudoku_example)
+        f.write(sudoku)
 
     problem = Sudoku.from_file("sudoku_test.txt")
     print(problem.grid)
