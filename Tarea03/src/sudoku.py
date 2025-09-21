@@ -172,7 +172,7 @@ class SudokuSolution:
         neighbor.values[idx1], neighbor.values[idx2] = neighbor.values[idx2], neighbor.values[idx1]
         return neighbor
 
-def simulated_annealing(problem, initial_temp=100.0, alpha=0.90, N0_factor = 2, p=1.15, max_iteration = 500000):
+def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2, p=1.15, max_iteration = 500000, cooling='s'):
     # Inicialización
     current_solution = SudokuSolution(problem)
     current_fitness = current_solution.evaluate()
@@ -215,7 +215,10 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.90, N0_factor = 2, 
             print(iteration)
             print(temperature)
             iteration += 1
-        temperature = geometric_cooling(temperature, alpha)
+        if cooling== 'g':
+            temperature = geometric_cooling(temperature, alpha)
+        if cooling=='s':
+            temperature = slow_cooling(temperature, alpha)
         N = int(N * p)
 
     print(f"Iteraciones: {iteration}")
@@ -223,6 +226,9 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.90, N0_factor = 2, 
 
 def geometric_cooling(current_temperature, alpha):
     return alpha * current_temperature
+
+def slow_cooling(current_temperature, alpha):
+    return  (current_temperature/(1+alpha*current_temperature)) 
 
 def solve_sudoku_from_file(filename, alpha=0.85):
     # Verificar que el archivo existe
