@@ -42,6 +42,7 @@ class SudokuSolution:
                 if not problem.fixed_cells[i, j]:
                     self.empty_positions.append((i, j))
         self.num_empty = len(self.empty_positions)      # Numero de celdas vacías
+        self.position_to_index = {pos: idx for idx, pos in enumerate(self.empty_positions)}
 
         self.values = self._generate_random_solution()
 
@@ -53,7 +54,7 @@ class SudokuSolution:
         if self.problem.fixed_cells[row, col]:
             return self.problem.grid[row, col]
         else:
-            idx = self.empty_positions.index((row, col))
+            idx = self.position_to_index[(row, col)]
             return self.values[idx]
 
     def set_value(self, row, col, value):
@@ -87,9 +88,6 @@ class SudokuSolution:
             grid[row, col] = self.values[idx]
 
         return grid
-
-    def copy(self):
-        return SudokuSolution(self.problem, self.values.copy())
 
     # FUNCIÓN DE EVALUACIÓN
     def evaluate(self):
