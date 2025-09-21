@@ -37,7 +37,7 @@ class SudokuSolution:
     def __init__(self, problem, values=None):
         self.problem = problem
 
-        # Obtener posiciones de celdas vacías (ordenadas por fila, luego columna)
+        # Obtener posiciones de celdas vacías
         self.empty_positions = []
         for i in range(problem.size):
             for j in range(problem.size):
@@ -46,7 +46,6 @@ class SudokuSolution:
         self.num_empty = len(self.empty_positions)      # Numero de celdas vacías
         self.position_to_index = {pos: idx for idx, pos in enumerate(self.empty_positions)}
 
-         # Inicializar valores
         if values is not None:
             if len(values) != self.num_empty:
                 raise ValueError(f"Se esperaban {self.num_empty} valores, se recibieron {len(values)}")
@@ -54,11 +53,10 @@ class SudokuSolution:
         else:
             self.values = self._generate_random_solution()
 
-    # Generar solución aleatoria
     def _generate_random_solution(self):
         n = self.problem.size
 
-        # 1. Contar valores fijos ya presentes en el tablero
+        # Contar valores fijos en el tablero
         fixed_counts = Counter()
         for i in range(n):
             for j in range(n):
@@ -66,26 +64,19 @@ class SudokuSolution:
                     value = self.problem.grid[i, j]
                     fixed_counts[value] += 1
 
-        # 2. Calcular cuántos de cada valor necesitamos agregar
+        # Calcular cuántos de cada valor necesitamos agregar
         needed_counts = {}
         for value in range(1, n + 1):
             current_count = fixed_counts.get(value, 0)
             needed = n - current_count
             needed_counts[value] = needed
 
-        # 3. Crear lista de valores necesarios para completar
+        # Crear lista de valores necesarios para completar
         values_needed = []
         for value, count in needed_counts.items():
             values_needed.extend([value] * count)
 
-        # 4. Verificar que tenemos exactamente el número correcto de valores
-        empty_cells_count = sum(1 for i in range(n) for j in range(n) if not self.problem.fixed_cells[i, j])
-
-        if len(values_needed) != empty_cells_count:
-            raise ValueError(f"Error de consistencia: se necesitan {len(values_needed)} valores "
-                                f"pero hay {empty_cells_count} celdas vacías")
-
-        # 5. Mezclar aleatoriamente los valores necesarios
+        # Mezclar aleatoriamente los valores necesarios
         random.shuffle(values_needed)
 
         return values_needed
@@ -121,12 +112,8 @@ class SudokuSolution:
             grid[row, col] = self.values[idx]
 
         return grid
-     # FUNCIÓN DE EVALUACIÓN
+
     def evaluate(self):
-        """
-        Función de evaluación que cuenta el número total de colisiones.
-            f(S) = C_filas(S) + C_columnas(S) + C_bloques(S)
-        """
         n = self.problem.size
         k = self.problem.block_size
         total_conflicts = 0
@@ -150,12 +137,6 @@ class SudokuSolution:
         return float(total_conflicts)
 
     def _count_conflicts_in_group(self, values):
-        """
-        Cuenta colisiones en un grupo usando conteo de frecuencias.
-
-        1. Contar frecuencia de cada valor
-        2. Colisiones = Σ(frecuencia - 1)
-        """
         freq = Counter(values)
         return sum(max(0, count - 1) for count in freq.values())
 
@@ -193,10 +174,8 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.90, N0_factor = 2, 
 
             delta_fitness = neighbor_fitness - current_fitness
             if delta_fitness <= 0:
-                # Vecino es mejor o igual - aceptar
                 accept = True
             else:
-                # Vecino es peor - aceptar con probabilidad exp(-Δf/T)
                 probability = math.exp(-delta_fitness / temperature)
                 accept = random.random() < probability
 
@@ -225,7 +204,6 @@ def geometric_cooling(current_temperature, alpha):
     return alpha * current_temperature
 
 def solve_sudoku_from_file(filename, alpha=0.85):
-    # Verificar que el archivo existe
     if not os.path.exists(filename):
         raise FileNotFoundError(f"El archivo '{filename}' no fue encontrado")
     try:
@@ -258,10 +236,8 @@ def main():
         print(f"Resolviendo sudoku desde: {filename}")
         print("Ejecutando Recocido Simulado...")
 
-        # Resolver sudoku desde archivo
         solution = solve_sudoku_from_file(filename)
 
-        # Mostrar resultados
         fitness = solution.evaluate()
         print(f"\nResultados:")
         print(f"Fitness final: {fitness}")
@@ -271,7 +247,6 @@ def main():
         else:
             print("Mejor solución encontrada:")
 
-        # Mostrar matriz solución
         grid = solution.get_grid()
         print("\nSolución:")
         for row in grid:
