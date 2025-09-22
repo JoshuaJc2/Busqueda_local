@@ -143,6 +143,7 @@ class SudokuSolution:
     def copy(self):
         return SudokuSolution(self.problem, self.values.copy())
 
+
     def get_neighbor(self):
         if self.num_empty < 2:
             return self.copy()
@@ -159,6 +160,10 @@ def geometric_cooling(current_temperature, alpha):
 def slow_cooling(current_temperature, alpha):
     return  (current_temperature/(1+alpha*current_temperature))
 
+def linear_cooling(current_temperature, beta):
+    new_temp = current_temperature - beta
+    return max(new_temp, 1e-4)  # Evita temperatura negativa
+
 def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2, p=1.15, max_iteration = 250000, cooling='l'):
     # Inicialización
     current_solution = SudokuSolution(problem)
@@ -170,6 +175,7 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2
     temperature = initial_temp
     iteration = 0
 
+    print(f"N {N}")
     print(f"Temperatura inicial: {temperature}")
     # Ciclo principal
     while temperature > 1e-4 and best_fitness > 0 and iteration < max_iteration:
@@ -201,22 +207,19 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2
             print(temperature)
             iteration += 1
         if cooling== 'g':
-            alpha = 0.95        # Alpha customizada para geometric
+            alpha = 0.88        # Alpha customizada para geometric
             temperature = geometric_cooling(temperature, alpha)
+            #print(temperature)
+            N = int(N * p)
         if cooling=='s':
             alpha = 0.0005      # Alpha customizada para slow
             temperature = slow_cooling(temperature, alpha)
         if cooling=='l':
-            beta = initial_temp / max_iteration  # Como es lineal, se emplea beta calculada de la temperatura inicial y max_iteration
-            temperature = linear_cooling(temperature, beta)
-        N = int(N * p)
+            beta = initial_temp/max_iteration  # Como es lineal, se emplea beta calculada de la temperatura inicial y max_iteration
+            temperature = linear_cooling(initial_temp, beta * iteration)
 
     print(f"Iteraciones: {iteration}")
     return best_solution, best_fitness
-
-def linear_cooling(current_temperature, beta):
-    new_temp = current_temperature - beta
-    return max(new_temp, 1e-4)  # Evita temperatura negativa
 
 def solve_sudoku_from_file(filename, cooling_method='s', alpha=0.85): # Si no se especifica un enfriamiento, usa el método lento por defecto
     if not os.path.exists(filename):
