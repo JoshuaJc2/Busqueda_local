@@ -153,7 +153,14 @@ class SudokuSolution:
         neighbor.values[idx1], neighbor.values[idx2] = neighbor.values[idx2], neighbor.values[idx1]
         return neighbor
 
-def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2, p=1.15, max_iteration = 500000, cooling='s'):
+
+def geometric_cooling(current_temperature, alpha):
+    return alpha * current_temperature
+
+def slow_cooling(current_temperature, alpha):
+    return  (current_temperature/(1+alpha*current_temperature))
+
+def simulated_annealing(problem, initial_temp=100.0, alpha=0.85, N0_factor = 2, p=1.15, max_iteration = 250000, cooling_func='g'):
     # Inicialización
     current_solution = SudokuSolution(problem)
     current_fitness = current_solution.evaluate()
@@ -194,22 +201,17 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2
             print(iteration)
             print(temperature)
             iteration += 1
-        if cooling== 'g':
+        if cooling_func== 'g':
             temperature = geometric_cooling(temperature, alpha)
-        if cooling=='s':
+        elif cooling_func=='s':
             temperature = slow_cooling(temperature, alpha)
         N = int(N * p)
 
     print(f"Iteraciones: {iteration}")
     return best_solution, best_fitness
 
-def geometric_cooling(current_temperature, alpha):
-    return alpha * current_temperature
 
-def slow_cooling(current_temperature, alpha):
-    return  (current_temperature/(1+alpha*current_temperature)) 
-
-def solve_sudoku_from_file(filename, alpha=0.85):
+def solve_sudoku_from_file(filename, alpha=0.85, cooling_func='g'):
     if not os.path.exists(filename):
         raise FileNotFoundError(f"El archivo '{filename}' no fue encontrado")
     try:
@@ -221,22 +223,39 @@ def solve_sudoku_from_file(filename, alpha=0.85):
         initial_temp = initial_fitness * 0.5
 
         # Ejecutar recocido simulado
-        best_solution, best_fitness = simulated_annealing(
-            problem=problem,
-            initial_temp=initial_temp,
-            alpha=alpha,
-        )
+        if cooling_func == 'g':
+            best_solution, best_fitness = simulated_annealing(
+                problem=problem,
+                initial_temp=initial_temp,
+                alpha=0.85,
+                cooling_func = 'g',
+            )
+        elif cooling_func == 's':
+            best_solution, best_fitness = simulated_annealing(
+                problem=problem,
+                initial_temp=initial_temp,
+                alpha=0.0005,
+                cooling_func = 's',
+            )
+        else:
+            best_solution, best_fitness = simulated_annealing(
+                problem=problem,
+                initial_temp=initial_temp,
+                alpha=alpha,
+                cooling_func = geometric_cooling,
+            )
+
         return best_solution
 
     except Exception as e:
         raise ValueError(f"Error al procesar el archivo '{filename}': {str(e)}")
 
-
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         print("Uso: python SimulatedAnnealing.py archivo.txt")
         sys.exit(1)
     filename = sys.argv[1]
+    cooling_func = sys.argv[2]
 
     try:
         print(f"Resolviendo sudoku desde: {filename}")
