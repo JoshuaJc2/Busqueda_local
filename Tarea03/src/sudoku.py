@@ -153,7 +153,7 @@ class SudokuSolution:
         neighbor.values[idx1], neighbor.values[idx2] = neighbor.values[idx2], neighbor.values[idx1]
         return neighbor
 
-def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2, p=1.15, max_iteration = 500000, cooling='s'):
+def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2, p=1.15, max_iteration = 250000, cooling='l'):
     # Inicialización
     current_solution = SudokuSolution(problem)
     current_fitness = current_solution.evaluate()
@@ -198,7 +198,9 @@ def simulated_annealing(problem, initial_temp=100.0, alpha=0.0005, N0_factor = 2
             temperature = geometric_cooling(temperature, alpha)
         if cooling=='s':
             temperature = slow_cooling(temperature, alpha)
-        N = int(N * p)
+            N = int(N * p)
+        if cooling=='l':
+            temperature = linear_cooling(temperature, alpha)
 
     print(f"Iteraciones: {iteration}")
     return best_solution, best_fitness
@@ -209,7 +211,10 @@ def geometric_cooling(current_temperature, alpha):
 def slow_cooling(current_temperature, alpha):
     return  (current_temperature/(1+alpha*current_temperature)) 
 
-def solve_sudoku_from_file(filename, alpha=0.85):
+def linear_cooling(current_temperature, beta):
+    return current_temperature - beta
+
+def solve_sudoku_from_file(filename, cooling_method='s', alpha=0.85): # Si no se especifica un enfriamiento, usa el método lento por defecto
     if not os.path.exists(filename):
         raise FileNotFoundError(f"El archivo '{filename}' no fue encontrado")
     try:
@@ -225,6 +230,7 @@ def solve_sudoku_from_file(filename, alpha=0.85):
             problem=problem,
             initial_temp=initial_temp,
             alpha=alpha,
+            cooling=cooling_method
         )
         return best_solution
 
@@ -233,16 +239,17 @@ def solve_sudoku_from_file(filename, alpha=0.85):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Uso: python SimulatedAnnealing.py archivo.txt")
+    if len(sys.argv) != 3:
+        print("Uso: python sudoku.py archivo.txt metodo_enfriamiento")
+        print("Métodos: g (geometric), s (slow), l (linear)")
         sys.exit(1)
+
     filename = sys.argv[1]
+    cooling_method = sys.argv[2]
 
     try:
-        print(f"Resolviendo sudoku desde: {filename}")
-        print("Ejecutando Recocido Simulado...")
-
-        solution = solve_sudoku_from_file(filename)
+        print(f"Resolviendo sudoku desde: {filename} con método {cooling_method}")
+        solution = solve_sudoku_from_file(filename, cooling_method=cooling_method)
 
         fitness = solution.evaluate()
         print(f"\nResultados:")
