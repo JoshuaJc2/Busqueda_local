@@ -1,0 +1,180 @@
+Ejemplar: David_Filmer1.txt, Método: g
+Repetición 1: Fitness final: 2.0, Iteraciones: 286648
+Repetición 2: Fitness final: 5.0, Iteraciones: 286648
+Repetición 3: Fitness final: 2.0, Iteraciones: 286648
+Repetición 4: Fitness final: 2.0, Iteraciones: 286648
+Repetición 5: Fitness final: 2.0, Iteraciones: 286648
+Repetición 6: Fitness final: 2.0, Iteraciones: 286648
+Repetición 7: Fitness final: 3.0, Iteraciones: 286648
+Repetición 8: Fitness final: 2.0, Iteraciones: 286648
+Repetición 9: Fitness final: 2.0, Iteraciones: 286648
+Repetición 10: Fitness final: 2.0, Iteraciones: 286648
+
+Ejemplar: David_Filmer1.txt, Método: s
+Repetición 1: Fitness final: 2.0, Iteraciones: 250002
+Repetición 2: Fitness final: 3.0, Iteraciones: 250002
+Repetición 3: Fitness final: 2.0, Iteraciones: 250002
+Repetición 4: Fitness final: 2.0, Iteraciones: 250002
+Repetición 5: Fitness final: 4.0, Iteraciones: 250002
+Repetición 6: Fitness final: 2.0, Iteraciones: 250002
+Repetición 7: Fitness final: 2.0, Iteraciones: 250002
+Repetición 8: Fitness final: 2.0, Iteraciones: 250002
+Repetición 9: Fitness final: 4.0, Iteraciones: 250002
+Repetición 10: Fitness final: 2.0, Iteraciones: 250002
+
+Ejemplar: David_Filmer1.txt, Método: l
+Repetición 1: Fitness final: 15.0, Iteraciones: 250002
+Repetición 2: Fitness final: 12.0, Iteraciones: 250002
+Repetición 3: Fitness final: 13.0, Iteraciones: 250002
+Repetición 4: Fitness final: 14.0, Iteraciones: 250002
+Repetición 5: Fitness final: 17.0, Iteraciones: 250002
+Repetición 6: Fitness final: 14.0, Iteraciones: 250002
+Repetición 7: Fitness final: 16.0, Iteraciones: 250002
+Repetición 8: Fitness final: 17.0, Iteraciones: 250002
+Repetición 9: Fitness final: 11.0, Iteraciones: 250002
+Repetición 10: Fitness final: 13.0, Iteraciones: 250002
+
+Ejemplar: Easy1.txt, Método: g
+Repetición 1: Fitness final: 0.0, Iteraciones: 40531
+Repetición 2: Fitness final: 0.0, Iteraciones: 26650
+Repetición 3: Fitness final: 0.0, Iteraciones: 23173
+Repetición 4: Fitness final: 0.0, Iteraciones: 26650
+Repetición 5: Fitness final: 5.0, Iteraciones: 286648
+Repetición 6: Fitness final: 0.0, Iteraciones: 40531
+Repetición 7: Fitness final: 0.0, Iteraciones: 17519
+Repetición 8: Fitness final: 2.0, Iteraciones: 286648
+Repetición 9: Fitness final: 0.0, Iteraciones: 13243
+Repetición 10: Fitness final: 0.0, Iteraciones: 46609
+
+Ejemplar: Easy1.txt, Método: s
+Repetición 1: Fitness final: 0.0, Iteraciones: 75474
+Repetición 2: Fitness final: 2.0, Iteraciones: 250002
+Repetición 3: Fitness final: 0.0, Iteraciones: 93438
+Repetición 4: Fitness final: 2.0, Iteraciones: 250002
+Repetición 5: Fitness final: 0.0, Iteraciones: 85896
+Repetición 6: Fitness final: 0.0, Iteraciones: 70146
+Repetición 7: Fitness final: 0.0, Iteraciones: 118980
+Repetición 8: Fitness final: 0.0, Iteraciones: 87732
+Repetición 9: Fitness final: 0.0, Iteraciones: 80010
+Repetición 10: Fitness final: 0.0, Iteraciones: 106524
+
+Ejemplar: Easy1.txt, Método: l
+Repetición 1: Fitness final: 4.0, Iteraciones: 250002
+Repetición 2: Fitness final: 2.0, Iteraciones: 250002
+Repetición 3: Fitness final: 9.0, Iteraciones: 250002
+Repetición 4: Fitness final: 8.0, Iteraciones: 250002
+Repetición 5: Fitness final: 2.0, Iteraciones: 250002
+Repetición 6: Fitness final: 6.0, Iteraciones: 250002
+Repetición 7: Fitness final: 11.0, Iteraciones: 250002
+Repetición 8: Fitness final: 4.0, Iteraciones: 250002
+Repetición 9: Fitness final: 7.0, Iteraciones: 250002
+Repetición 10: Fitness final: 6.0, Iteraciones: 250002
+
+Ejemplar: Hard1.txt, Método: g
+Repetición 1: Fitness final: 2.0, Iteraciones: 286648
+Repetición 2: Fitness final: 2.0, Iteraciones: 286648
+Repetición 3: Fitness final: 2.0, Iteraciones: 286648
+Repetición 4: Fitness final: 4.0, Iteraciones: 286648
+Repetición 5: Fitness final: 4.0, Iteraciones: 286648
+Repetición 6: Fitness final: 2.0, Iteraciones: 286648
+Repetición 7: Fitness final: 2.0, Iteraciones: 286648
+Repetición 8: Fitness final: 4.0, Iteraciones: 286648
+Repetición 9: Fitness final: 2.0, Iteraciones: 286648
+Repetición 10: Fitness final: 4.0, Iteraciones: 286648
+
+Ejemplar: Hard1.txt, Método: s
+Repetición 1: Fitness final: 2.0, Iteraciones: 250002
+Repetición 2: Fitness final: 4.0, Iteraciones: 250002
+Repetición 3: Fitness final: 0.0, Iteraciones: 147510
+Repetición 4: Fitness final: 2.0, Iteraciones: 250002
+Repetición 5: Fitness final: 4.0, Iteraciones: 250002
+Repetición 6: Fitness final: 0.0, Iteraciones: 101556
+Repetición 7: Fitness final: 2.0, Iteraciones: 250002
+Repetición 8: Fitness final: 0.0, Iteraciones: 104688
+Repetición 9: Fitness final: 4.0, Iteraciones: 250002
+Repetición 10: Fitness final: 2.0, Iteraciones: 250002
+
+Ejemplar: Hard1.txt, Método: l
+Repetición 1: Fitness final: 12.0, Iteraciones: 250002
+Repetición 2: Fitness final: 12.0, Iteraciones: 250002
+Repetición 3: Fitness final: 14.0, Iteraciones: 250002
+Repetición 4: Fitness final: 12.0, Iteraciones: 250002
+Repetición 5: Fitness final: 8.0, Iteraciones: 250002
+Repetición 6: Fitness final: 7.0, Iteraciones: 250002
+Repetición 7: Fitness final: 12.0, Iteraciones: 250002
+Repetición 8: Fitness final: 11.0, Iteraciones: 250002
+Repetición 9: Fitness final: 11.0, Iteraciones: 250002
+Repetición 10: Fitness final: 11.0, Iteraciones: 250002
+
+Ejemplar: Medium1.txt, Método: g
+Repetición 1: Fitness final: 6.0, Iteraciones: 286648
+Repetición 2: Fitness final: 5.0, Iteraciones: 286648
+Repetición 3: Fitness final: 2.0, Iteraciones: 286648
+Repetición 4: Fitness final: 4.0, Iteraciones: 286648
+Repetición 5: Fitness final: 5.0, Iteraciones: 286648
+Repetición 6: Fitness final: 0.0, Iteraciones: 70877
+Repetición 7: Fitness final: 7.0, Iteraciones: 286648
+Repetición 8: Fitness final: 2.0, Iteraciones: 286648
+Repetición 9: Fitness final: 0.0, Iteraciones: 70877
+Repetición 10: Fitness final: 4.0, Iteraciones: 286648
+
+Ejemplar: Medium1.txt, Método: s
+Repetición 1: Fitness final: 4.0, Iteraciones: 250002
+Repetición 2: Fitness final: 0.0, Iteraciones: 96696
+Repetición 3: Fitness final: 2.0, Iteraciones: 250002
+Repetición 4: Fitness final: 0.0, Iteraciones: 132786
+Repetición 5: Fitness final: 2.0, Iteraciones: 250002
+Repetición 6: Fitness final: 2.0, Iteraciones: 250002
+Repetición 7: Fitness final: 4.0, Iteraciones: 250002
+Repetición 8: Fitness final: 2.0, Iteraciones: 250002
+Repetición 9: Fitness final: 4.0, Iteraciones: 250002
+Repetición 10: Fitness final: 0.0, Iteraciones: 120888
+
+Ejemplar: Medium1.txt, Método: l
+Repetición 1: Fitness final: 6.0, Iteraciones: 250002
+Repetición 2: Fitness final: 9.0, Iteraciones: 250002
+Repetición 3: Fitness final: 11.0, Iteraciones: 250002
+Repetición 4: Fitness final: 15.0, Iteraciones: 250002
+Repetición 5: Fitness final: 6.0, Iteraciones: 250002
+Repetición 6: Fitness final: 11.0, Iteraciones: 250002
+Repetición 7: Fitness final: 12.0, Iteraciones: 250002
+Repetición 8: Fitness final: 13.0, Iteraciones: 250002
+Repetición 9: Fitness final: 15.0, Iteraciones: 250002
+Repetición 10: Fitness final: 13.0, Iteraciones: 250002
+
+Ejemplar: SD2.txt, Método: g
+Repetición 1: Fitness final: 2.0, Iteraciones: 286648
+Repetición 2: Fitness final: 2.0, Iteraciones: 286648
+Repetición 3: Fitness final: 2.0, Iteraciones: 286648
+Repetición 4: Fitness final: 3.0, Iteraciones: 286648
+Repetición 5: Fitness final: 2.0, Iteraciones: 286648
+Repetición 6: Fitness final: 2.0, Iteraciones: 286648
+Repetición 7: Fitness final: 4.0, Iteraciones: 286648
+Repetición 8: Fitness final: 7.0, Iteraciones: 286648
+Repetición 9: Fitness final: 2.0, Iteraciones: 286648
+Repetición 10: Fitness final: 3.0, Iteraciones: 286648
+
+Ejemplar: SD2.txt, Método: s
+Repetición 1: Fitness final: 2.0, Iteraciones: 250002
+Repetición 2: Fitness final: 4.0, Iteraciones: 250002
+Repetición 3: Fitness final: 2.0, Iteraciones: 250002
+Repetición 4: Fitness final: 2.0, Iteraciones: 250002
+Repetición 5: Fitness final: 3.0, Iteraciones: 250002
+Repetición 6: Fitness final: 2.0, Iteraciones: 250002
+Repetición 7: Fitness final: 2.0, Iteraciones: 250002
+Repetición 8: Fitness final: 2.0, Iteraciones: 250002
+Repetición 9: Fitness final: 2.0, Iteraciones: 250002
+Repetición 10: Fitness final: 2.0, Iteraciones: 250002
+
+Ejemplar: SD2.txt, Método: l
+Repetición 1: Fitness final: 12.0, Iteraciones: 250002
+Repetición 2: Fitness final: 14.0, Iteraciones: 250002
+Repetición 3: Fitness final: 12.0, Iteraciones: 250002
+Repetición 4: Fitness final: 15.0, Iteraciones: 250002
+Repetición 5: Fitness final: 12.0, Iteraciones: 250002
+Repetición 6: Fitness final: 11.0, Iteraciones: 250002
+Repetición 7: Fitness final: 16.0, Iteraciones: 250002
+Repetición 8: Fitness final: 8.0, Iteraciones: 250002
+Repetición 9: Fitness final: 17.0, Iteraciones: 250002
+Repetición 10: Fitness final: 17.0, Iteraciones: 250002
+
